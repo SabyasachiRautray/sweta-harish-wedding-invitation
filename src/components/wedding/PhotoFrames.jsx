@@ -7,59 +7,89 @@ const BRIDE_PHOTO = "/bride.webp";
 const GROOM_PHOTO = "/groom.webp";
 const COUPLE_PHOTO = "/couple.webp";
 
-const ArchFrame = ({ testId, label, imgSrc, delay = 0 }) => (
-  <motion.div
-    data-testid={testId}
-    className="flex flex-col items-center gap-4"
-    initial={{ opacity: 0, y: 40 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-50px" }}
-    transition={{ duration: 0.8, delay }}
-  >
-    <div
-      className="relative w-48 h-64 sm:w-56 sm:h-72 lg:w-64 lg:h-80 overflow-hidden"
-      style={{
-        borderRadius: "50% 50% 4px 4px / 40% 40% 4px 4px",
-        padding: "6px",
-        background: "linear-gradient(135deg, #D4AF37, #800000, #D4AF37)",
-      }}
+const ArchFrame = ({ testId, label, imgSrc, delay = 0 }) => {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  return (
+    <motion.div
+      data-testid={testId}
+      className="flex flex-col items-center gap-4"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.8, delay }}
     >
       <div
-        className="w-full h-full overflow-hidden relative"
+        className="relative w-48 h-64 sm:w-56 sm:h-72 lg:w-64 lg:h-80 overflow-hidden"
         style={{
-          borderRadius: "50% 50% 2px 2px / 40% 40% 2px 2px",
-          backgroundColor: "#FFFDD0",
+          borderRadius: "50% 50% 4px 4px / 40% 40% 4px 4px",
+          padding: "6px",
+          background: "linear-gradient(135deg, #D4AF37, #800000, #D4AF37)",
         }}
       >
-        <img
-          src={imgSrc}
-          alt={label}
-          className="w-full h-full object-cover"
-          loading="lazy"
-        />
-        {/* Placeholder overlay when no real photo */}
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
-          style={{ backgroundColor: "rgba(128,0,0,0.5)" }}
+          className="w-full h-full overflow-hidden relative"
+          style={{
+            borderRadius: "50% 50% 2px 2px / 40% 40% 2px 2px",
+            backgroundColor: "#FFFDD0",
+          }}
         >
-          <Camera size={24} color="#FFFDD0" />
-          <span
-            className="text-xs mt-2"
-            style={{ fontFamily: "'Outfit', sans-serif", color: "#FFFDD0" }}
+          {/* Skeleton Shimmer Loading Animation */}
+          {!isLoaded && (
+            <motion.div
+              className="absolute inset-0 z-10 flex flex-col items-center justify-center"
+              style={{
+                background: "linear-gradient(110deg, #FAF9F6 30%, #FDE68A 50%, #FAF9F6 70%)",
+                backgroundSize: "200% 100%",
+              }}
+              animate={{
+                backgroundPosition: ["200% 0", "-200% 0"],
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 1.8,
+                ease: "linear",
+              }}
+            >
+              <Camera size={28} className="opacity-40 animate-pulse text-[#800000]" />
+            </motion.div>
+          )}
+
+          <motion.img
+            src={imgSrc}
+            alt={label}
+            className="w-full h-full object-cover"
+            loading="lazy"
+            onLoad={() => setIsLoaded(true)}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: isLoaded ? 1 : 0, scale: isLoaded ? 1 : 1.05 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          />
+
+          {/* Hover Overlay */}
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+            style={{ backgroundColor: "rgba(128,0,0,0.4)" }}
           >
-            Add Photo
-          </span>
+            <Camera size={24} color="#FFFDD0" />
+            <span
+              className="text-xs mt-2"
+              style={{ fontFamily: "'Outfit', sans-serif", color: "#FFFDD0" }}
+            >
+              {label}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-    <h3
-      className="text-xl sm:text-2xl"
-      style={{ fontFamily: "'Great Vibes', cursive", color: "#800000" }}
-    >
-      {label}
-    </h3>
-  </motion.div>
-);
+      <h3
+        className="text-xl sm:text-2xl"
+        style={{ fontFamily: "'Great Vibes', cursive", color: "#800000" }}
+      >
+        {label}
+      </h3>
+    </motion.div>
+  );
+};
 
 const PhotoFrames = () => {
   return (
