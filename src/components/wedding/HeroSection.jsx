@@ -62,25 +62,43 @@ const HeroSection = () => {
         style={{ background: "linear-gradient(90deg, transparent, #D4AF37, transparent)" }}
       />
 
-      {/* Om/Ganesh symbol */}
+      {/* Ganesha Image & Shloka */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
+        initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, delay: 0.2 }}
-        className="mb-6"
+        className="mb-8 flex flex-col items-center text-center px-4"
       >
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-          <circle cx="24" cy="24" r="22" stroke="#D4AF37" strokeWidth="1" />
-          <text
-            x="24"
-            y="30"
-            textAnchor="middle"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "18px" }}
-            fill="#800000"
-          >
-            Sri
-          </text>
-        </svg>
+        <div
+          className="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1 mb-4 flex items-center justify-center overflow-hidden"
+          style={{
+            border: "2px solid #D4AF37",
+            boxShadow: "0 4px 20px rgba(128, 0, 0, 0.15)",
+            backgroundColor: "#FFFFFF",
+          }}
+        >
+          <img
+            src="https://images.unsplash.com/photo-1567878673942-be055fed5d30?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHw0fHxHYW5lc2hhfGVufDB8fHx8MTc4Mjk5MzgxOHww&ixlib=rb-4.1.0&q=85&w=400"
+            alt="Lord Ganesha"
+            className="w-full h-full object-cover rounded-full"
+          />
+        </div>
+
+        <p
+          className="text-base sm:text-lg font-bold tracking-widest uppercase mb-2"
+          style={{ fontFamily: "'Cormorant Garamond', serif", color: "#800000" }}
+        >
+          || Shree Ganeshaya Namah ||
+        </p>
+
+        <p
+          className="text-xs sm:text-sm font-semibold italic max-w-lg leading-relaxed"
+          style={{ fontFamily: "'Cormorant Garamond', serif", color: "#5C4D4D" }}
+        >
+          वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।<br />
+          निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥
+        </p>
+
       </motion.div>
 
       {/* Invitation text */}
@@ -93,6 +111,43 @@ const HeroSection = () => {
       >
         Together with their families
       </motion.p>
+
+      {/* Bride Name */}
+      <motion.div
+        className="text-center mb-10"
+        initial={{ opacity: 0, x: 40 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1.1, duration: 0.8, ease: "easeOut" }}
+      >
+        <h1
+          className="text-4xl sm:text-5xl lg:text-6xl"
+          style={{ fontFamily: "'Great Vibes', cursive", color: "#800000" }}
+        >
+          Dhavala Sweta
+        </h1>
+        <p
+          className="text-xs sm:text-sm mt-1"
+          style={{ fontFamily: "'Outfit', sans-serif", color: "#5C4D4D" }}
+        >
+          D/o. Late Sri D.V.R. Murthy & Smt. D. Annapurneswary
+        </p>
+      </motion.div>
+
+
+      {/* Ampersand */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.9, duration: 0.5, type: "spring" }}
+        className="my-4"
+      >
+        <span
+          className="text-4xl sm:text-5xl"
+          style={{ fontFamily: "'Great Vibes', cursive", color: "#D4AF37" }}
+        >
+          &
+        </span>
+      </motion.div>
 
       {/* Groom Name */}
       <motion.div
@@ -115,41 +170,6 @@ const HeroSection = () => {
         </p>
       </motion.div>
 
-      {/* Ampersand */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.9, duration: 0.5, type: "spring" }}
-        className="my-4"
-      >
-        <span
-          className="text-4xl sm:text-5xl"
-          style={{ fontFamily: "'Great Vibes', cursive", color: "#D4AF37" }}
-        >
-          &
-        </span>
-      </motion.div>
-
-      {/* Bride Name */}
-      <motion.div
-        className="text-center mb-10"
-        initial={{ opacity: 0, x: 40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 1.1, duration: 0.8, ease: "easeOut" }}
-      >
-        <h1
-          className="text-4xl sm:text-5xl lg:text-6xl"
-          style={{ fontFamily: "'Great Vibes', cursive", color: "#800000" }}
-        >
-          Dhavala Sweta
-        </h1>
-        <p
-          className="text-xs sm:text-sm mt-1"
-          style={{ fontFamily: "'Outfit', sans-serif", color: "#5C4D4D" }}
-        >
-          D/o. Late Sri D.V.R. Murthy & Smt. D. Annapurneswary
-        </p>
-      </motion.div>
 
       {/* Date */}
       <motion.div

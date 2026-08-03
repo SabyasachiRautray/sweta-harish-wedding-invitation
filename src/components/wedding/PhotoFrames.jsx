@@ -127,10 +127,10 @@ const PhotoFrames = () => {
       {/* Photo frames */}
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-12 md:gap-16">
         <ArchFrame
-          testId={WEDDING.groomFrame}
-          label="Sai Harish Kumar"
-          imgSrc={GROOM_PHOTO}
-          delay={0}
+          testId={WEDDING.brideFrame}
+          label="Dhavala Sweta"
+          imgSrc={BRIDE_PHOTO}
+          delay={0.4}
         />
         <ArchFrame
           testId={WEDDING.coupleFrame}
@@ -138,11 +138,12 @@ const PhotoFrames = () => {
           imgSrc={COUPLE_PHOTO}
           delay={0.2}
         />
+
         <ArchFrame
-          testId={WEDDING.brideFrame}
-          label="Dhavala Sweta"
-          imgSrc={BRIDE_PHOTO}
-          delay={0.4}
+          testId={WEDDING.groomFrame}
+          label="Sai Harish Kumar"
+          imgSrc={GROOM_PHOTO}
+          delay={0}
         />
       </div>
 

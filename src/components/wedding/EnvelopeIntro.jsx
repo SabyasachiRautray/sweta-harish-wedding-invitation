@@ -84,14 +84,14 @@ const EnvelopeIntro = ({ onOpen }) => {
             style={{ fontFamily: "'Great Vibes', cursive", color: "#800000" }}
             className="text-3xl sm:text-4xl mb-1"
           >
-            Sai Harish Kumar
+            Dhavala Sweta
           </h2>
           <p style={{ fontFamily: "'Cormorant Garamond', serif", color: "#D4AF37" }} className="text-lg">&</p>
           <h2
             style={{ fontFamily: "'Great Vibes', cursive", color: "#800000" }}
             className="text-3xl sm:text-4xl"
           >
-            Dhavala Sweta
+            Sai Harish Kumar
           </h2>
         </motion.div>
 

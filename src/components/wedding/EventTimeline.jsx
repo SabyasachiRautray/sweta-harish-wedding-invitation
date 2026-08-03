@@ -16,8 +16,8 @@ const events = [
     image: HALDI_BG,
     items: [
       { name: "Raata", time: "8:00 AM - 9:00 AM" },
-      { name: "Haldi", time: "9:00 AM to until we play" },
       { name: "Pellikuthuru", time: "After Haldi Done" },
+      { name: "Haldi", time: "9:00 AM to until we play" },
     ],
   },
   {
@@ -56,8 +56,9 @@ const TimelineCard = ({ event, index }) => {
   return (
     <motion.div
       data-testid={`${WEDDING.eventCard}-${index}`}
-      className={`relative flex flex-col md:flex-row items-center gap-6 md:gap-0 mb-16 md:mb-24 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"
-        }`}
+      className={`relative flex flex-col md:flex-row items-center gap-6 md:gap-0 mb-16 md:mb-24 ${
+        isLeft ? "md:flex-row" : "md:flex-row-reverse"
+      }`}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
@@ -68,13 +69,13 @@ const TimelineCard = ({ event, index }) => {
         <div
           className="rounded-2xl overflow-hidden"
           style={{
-            backgroundColor: "#FAF9F6",
-            boxShadow: "0 8px 32px rgba(128,0,0,0.06)",
-            border: "1px solid rgba(212,175,55,0.2)",
+            backgroundColor: "#FFFFFF",
+            boxShadow: "0 10px 30px rgba(128,0,0,0.1)",
+            border: "1.5px solid rgba(212,175,55,0.4)",
           }}
         >
           {/* Event image */}
-          <div className="relative h-48 sm:h-56 overflow-hidden">
+          <div className="relative h-52 sm:h-60 overflow-hidden">
             <img
               src={event.image}
               alt={event.day}
@@ -84,13 +85,18 @@ const TimelineCard = ({ event, index }) => {
             <div
               className="absolute inset-0"
               style={{
-                background: "linear-gradient(to bottom, transparent 40%, rgba(128,0,0,0.6))",
+                background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 20%, rgba(128,0,0,0.75))",
               }}
             />
             <div className="absolute bottom-4 left-4">
               <span
-                className="text-xs uppercase tracking-widest font-medium"
-                style={{ fontFamily: "'Outfit', sans-serif", color: "#FDE68A" }}
+                className="text-xs sm:text-sm uppercase tracking-widest font-bold px-3 py-1.5 rounded-full shadow-md backdrop-blur-md"
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  color: "#FFF5C0",
+                  backgroundColor: "rgba(128, 0, 0, 0.85)",
+                  border: "1px solid rgba(212,175,55,0.5)",
+                }}
               >
                 {event.day}
               </span>
@@ -98,46 +104,46 @@ const TimelineCard = ({ event, index }) => {
           </div>
 
           {/* Card body */}
-          <div className="p-6">
-            <div className="flex items-center gap-2 mb-3">
-              <CalendarDays size={14} color="#D4AF37" />
+          <div className="p-6 sm:p-7">
+            <div className="flex items-center gap-2.5 mb-3">
+              <CalendarDays size={20} color="#D4AF37" className="stroke-[2.5]" />
               <h3
-                className="text-lg sm:text-xl font-semibold"
+                className="text-xl sm:text-2xl font-bold tracking-wide"
                 style={{ fontFamily: "'Cormorant Garamond', serif", color: "#800000" }}
               >
                 {event.date}
               </h3>
             </div>
 
-            <div className="flex items-start gap-2 mb-5">
-              <MapPin size={14} color="#D4AF37" className="mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-2.5 mb-5 bg-amber-50/70 p-3 rounded-lg border border-amber-200/60">
+              <MapPin size={18} color="#800000" className="mt-0.5 flex-shrink-0 stroke-[2.5]" />
               <p
-                className="text-sm"
-                style={{ fontFamily: "'Outfit', sans-serif", color: "#5C4D4D" }}
+                className="text-sm sm:text-base font-semibold leading-snug"
+                style={{ fontFamily: "'Outfit', sans-serif", color: "#2D2424" }}
               >
                 {event.venue}
               </p>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-3.5">
               {event.items.map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-3 pl-3"
-                  style={{ borderLeft: "2px solid #D4AF37" }}
+                  className="flex items-start gap-3 p-3 bg-amber-50/30 rounded-r-lg"
+                  style={{ borderLeft: "3.5px solid #D4AF37" }}
                 >
                   <div className="flex-1">
                     <p
-                      className="text-sm font-medium"
-                      style={{ fontFamily: "'Cormorant Garamond', serif", color: "#2D2424", fontSize: "16px" }}
+                      className="text-base sm:text-lg font-bold leading-snug"
+                      style={{ fontFamily: "'Cormorant Garamond', serif", color: "#800000" }}
                     >
                       {item.name}
                     </p>
-                    <div className="flex items-center gap-1.5 mt-0.5">
-                      <Clock size={11} color="#5C4D4D" />
+                    <div className="flex items-center gap-2 mt-1">
+                      <Clock size={14} color="#B8860B" className="stroke-[2.5]" />
                       <p
-                        className="text-xs"
-                        style={{ fontFamily: "'Outfit', sans-serif", color: "#5C4D4D" }}
+                        className="text-xs sm:text-sm font-semibold"
+                        style={{ fontFamily: "'Outfit', sans-serif", color: "#4A3B3B" }}
                       >
                         {item.time}
                       </p>
@@ -153,11 +159,11 @@ const TimelineCard = ({ event, index }) => {
       {/* Timeline center dot - visible only on desktop */}
       <div className="hidden md:flex md:w-2/12 justify-center relative">
         <motion.div
-          className="w-4 h-4 rounded-full z-10"
+          className="w-5 h-5 rounded-full z-10"
           style={{
             backgroundColor: "#D4AF37",
-            border: "3px solid #FAF9F6",
-            boxShadow: "0 0 0 2px #D4AF37",
+            border: "3px solid #FFFFFF",
+            boxShadow: "0 0 0 3px #800000, 0 0 10px rgba(212,175,55,0.5)",
           }}
           whileInView={{ scale: [0, 1.3, 1] }}
           viewport={{ once: true }}
@@ -187,19 +193,19 @@ const EventTimeline = () => {
         transition={{ duration: 0.6 }}
       >
         <p
-          className="text-xs uppercase tracking-[0.25em] mb-3"
-          style={{ fontFamily: "'Outfit', sans-serif", color: "#5C4D4D" }}
+          className="text-sm sm:text-base uppercase tracking-[0.25em] font-bold mb-3"
+          style={{ fontFamily: "'Outfit', sans-serif", color: "#800000" }}
         >
           Wedding Celebrations
         </p>
         <h2
-          className="text-3xl sm:text-4xl lg:text-5xl"
+          className="text-4xl sm:text-5xl lg:text-6xl font-bold"
           style={{ fontFamily: "'Great Vibes', cursive", color: "#800000" }}
         >
           Our Journey of Celebrations
         </h2>
         <div
-          className="mx-auto mt-4 w-24 h-px"
+          className="mx-auto mt-4 w-28 h-1 rounded-full"
           style={{ backgroundColor: "#D4AF37" }}
         />
       </motion.div>
@@ -208,8 +214,8 @@ const EventTimeline = () => {
       <div className="max-w-5xl mx-auto relative">
         {/* Vertical line - desktop only */}
         <div
-          className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2"
-          style={{ backgroundColor: "#D4AF37", opacity: 0.3 }}
+          className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 rounded-full"
+          style={{ backgroundColor: "#D4AF37", opacity: 0.4 }}
         />
 
         {events.map((event, index) => (

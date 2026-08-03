@@ -40,7 +40,7 @@ const Footer = () => {
           className="text-2xl sm:text-3xl mb-4"
           style={{ fontFamily: "'Great Vibes', cursive", color: "#800000" }}
         >
-          Sai Harish Kumar & Dhavala Sweta
+          Dhavala Sweta & Sai Harish Kumar
         </h3>
 
         <p
