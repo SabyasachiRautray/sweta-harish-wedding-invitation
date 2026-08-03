@@ -124,6 +124,26 @@ const EnvelopeIntro = ({ onOpen }) => {
             transition={{ duration: 0.3 }}
           />
         </motion.button>
+
+        {/* Sacred Logo & Branding */}
+        <motion.div
+          className="flex flex-col items-center justify-center gap-3 mt-6"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
+        >
+          <img
+            src={process.env.PUBLIC_URL + "/logosacred.png"}
+            alt="Sacred Knots Logo"
+            className="h-9 sm:h-10 w-auto object-contain"
+          />
+          <p
+            className="text-xs uppercase tracking-[0.2em] font-semibold"
+            style={{ fontFamily: "'Outfit', sans-serif", color: "#800000" }}
+          >
+            Crafted with love tale
+          </p>
+        </motion.div>
       </div>
     </motion.div>
   );

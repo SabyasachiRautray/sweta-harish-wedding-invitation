@@ -55,12 +55,19 @@ const Footer = () => {
           style={{ backgroundColor: "#D4AF37" }}
         />
 
-        <p
-          className="text-xs mt-6"
-          style={{ fontFamily: "'Outfit', sans-serif", color: "#5C4D4D", opacity: 0.6 }}
-        >
-          Made with love
-        </p>
+        <div className="flex flex-col items-center justify-center gap-3 mt-8">
+          <img
+            src={process.env.PUBLIC_URL + "/logosacred.png"}
+            alt="Sacred Knots Logo"
+            className="h-14 sm:h-16 w-auto object-contain transition-transform duration-300 hover:scale-105"
+          />
+          <p
+            className="text-sm uppercase tracking-[0.25em] font-semibold"
+            style={{ fontFamily: "'Outfit', sans-serif", color: "#800000", opacity: 0.9 }}
+          >
+            Crafted with love tale
+          </p>
+        </div>
       </motion.div>
     </footer>
   );

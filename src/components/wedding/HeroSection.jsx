@@ -56,11 +56,21 @@ const HeroSection = () => {
       className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden"
       style={{ backgroundColor: "#FAF9F6" }}
     >
-      {/* Decorative top border */}
-      <div
-        className="absolute top-0 left-0 right-0 h-1"
-        style={{ background: "linear-gradient(90deg, transparent, #D4AF37, transparent)" }}
-      />
+      {/* Brand Logo - Top Left Corner */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="absolute top-5 left-5 sm:top-7 sm:left-7 z-10"
+      >
+        <img
+          src={process.env.PUBLIC_URL + "/logosacred.png"}
+          alt="Sacred Knots Logo"
+          className="h-8 sm:h-10 w-auto object-contain"
+        />
+
+      </motion.div>
+
 
       {/* Ganesha Image & Shloka */}
       <motion.div
@@ -209,6 +219,17 @@ const HeroSection = () => {
         <CountdownUnit value={timeLeft.minutes} label="Min" />
         <CountdownUnit value={timeLeft.seconds} label="Sec" />
       </motion.div>
+
+      {/* Crafted with love tale tagline */}
+      {/* <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.2, duration: 0.8 }}
+        className="mt-10 text-[11px] sm:text-xs uppercase tracking-[0.25em] font-medium"
+        style={{ fontFamily: "'Outfit', sans-serif", color: "#D4AF37" }}
+      >
+        Crafted with love tale
+      </motion.p> */}
 
       {/* Bottom decorative line */}
       <div
