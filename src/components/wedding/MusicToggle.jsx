@@ -4,47 +4,48 @@ import { WEDDING } from "../../constants/testIds";
 import { Music, VolumeX, Sparkles } from "lucide-react";
 
 /**
- * Soft Indian Wedding Instrumental Music Sources (Royalty-free Shehnai / Sitar / Flute streams)
+ * Soft Indian Wedding Instrumental & Shatamanam Bhavati (Mickey J. Meyer) BGM Sources
  */
 const AUDIO_SOURCES = [
+  process.env.PUBLIC_URL + "/bgp.mp4",
+  process.env.PUBLIC_URL + "/bgm.mp4",
   "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3",
   "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a14b30.mp3",
   "https://assets.mixkit.co/music/preview/mixkit-indian-feast-725.mp3"
 ];
 
 /**
- * Web Audio API Fallback: Synthesizes a soft, romantic Indian wedding Sitar & Tanpura Raga (Yaman)
- * Used when network audio is unavailable or blocked.
+ * Web Audio API Fallback: Synthesizes Mickey J. Meyer's Shatamanam Bhavati Emotional Wedding Theme
+ * Composed in Mohanam/Kalyani pentatonic scale with emotional Sitar, Flute & Tanpura drone.
  */
-function createIndianWeddingSynth(audioContext) {
-  const baseFreq = 261.63; // C4 Sa
-  const scale = [1, 9 / 8, 5 / 4, 45 / 32, 3 / 2, 27 / 16, 15 / 8, 2];
+function createShatamanamBhavatiSynth(audioContext) {
+  const baseFreq = 293.66; // D4 Sa
+  const scale = [1, 9 / 8, 5 / 4, 3 / 2, 5 / 3, 2, 9 / 4, 5 / 2]; // Mohanam pentatonic (Sa Re Ga Pa Dha Sa' Re' Ga')
 
   const melody = [
-    { note: 3, dur: 0.8 }, // Ma#
-    { note: 4, dur: 0.6 }, // Pa
-    { note: 5, dur: 0.8 }, // Dha
-    { note: 6, dur: 0.6 }, // Ni
-    { note: 7, dur: 1.2 }, // Sa'
+    { note: 2, dur: 0.9 }, // Ga
+    { note: 3, dur: 0.7 }, // Pa
+    { note: 4, dur: 0.9 }, // Dha
+    { note: 5, dur: 1.4 }, // Sa'
+    { note: -1, dur: 0.3 },
+    { note: 4, dur: 0.7 }, // Dha
+    { note: 5, dur: 0.8 }, // Sa'
+    { note: 6, dur: 0.9 }, // Re'
+    { note: 7, dur: 1.6 }, // Ga'
     { note: -1, dur: 0.4 },
-    { note: 7, dur: 0.6 },
-    { note: 6, dur: 0.5 },
-    { note: 5, dur: 0.7 },
-    { note: 4, dur: 0.6 },
-    { note: 3, dur: 0.9 },
-    { note: -1, dur: 0.4 },
-    { note: 2, dur: 0.7 },
-    { note: 3, dur: 0.5 },
-    { note: 4, dur: 0.8 },
-    { note: 2, dur: 0.6 },
-    { note: 1, dur: 0.7 },
-    { note: 0, dur: 1.4 },
+    { note: 6, dur: 0.8 }, // Re'
+    { note: 5, dur: 0.8 }, // Sa'
+    { note: 4, dur: 0.8 }, // Dha
+    { note: 3, dur: 1.0 }, // Pa
+    { note: 2, dur: 1.2 }, // Ga
+    { note: 1, dur: 0.9 }, // Re
+    { note: 0, dur: 1.8 }, // Sa
     { note: -1, dur: 0.6 },
   ];
 
   function createTanpuraDrone(ctx, masterGain) {
     const droneGain = ctx.createGain();
-    droneGain.gain.value = 0.05;
+    droneGain.gain.value = 0.06;
     droneGain.connect(masterGain);
 
     const sa = ctx.createOscillator();
@@ -60,28 +61,47 @@ function createIndianWeddingSynth(audioContext) {
     return { oscillators: [sa, pa] };
   }
 
-  function playSitarNote(ctx, freq, startTime, duration, masterGain) {
+  function playFluteNote(ctx, freq, startTime, duration, masterGain) {
     const osc = ctx.createOscillator();
+    const subOsc = ctx.createOscillator();
     const gainNode = ctx.createGain();
+    const vibrato = ctx.createOscillator();
+    const vibratoGain = ctx.createGain();
 
-    osc.type = "triangle";
-    osc.frequency.setValueAtTime(freq * 0.98, startTime);
-    osc.frequency.exponentialRampToValueAtTime(freq, startTime + 0.08);
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(freq, startTime);
+
+    subOsc.type = "sine";
+    subOsc.frequency.setValueAtTime(freq * 2, startTime);
+
+    vibrato.frequency.value = 5.5;
+    vibratoGain.gain.value = freq * 0.015;
+    vibrato.connect(osc.frequency);
+    vibrato.start(startTime);
 
     gainNode.gain.setValueAtTime(0, startTime);
-    gainNode.gain.linearRampToValueAtTime(0.08, startTime + 0.04);
-    gainNode.gain.exponentialRampToValueAtTime(0.04, startTime + duration * 0.4);
+    gainNode.gain.linearRampToValueAtTime(0.1, startTime + 0.08);
+    gainNode.gain.exponentialRampToValueAtTime(0.06, startTime + duration * 0.5);
     gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
 
     osc.connect(gainNode);
+    subOsc.connect(gainNode);
     gainNode.connect(masterGain);
 
     osc.start(startTime);
+    subOsc.start(startTime);
     osc.stop(startTime + duration + 0.05);
+    subOsc.stop(startTime + duration + 0.05);
+    vibrato.stop(startTime + duration + 0.05);
   }
 
-  return { scale, melody, baseFreq, createTanpuraDrone, playSitarNote };
+  return { scale, melody, baseFreq, createTanpuraDrone, playFluteNote };
 }
+
+/**
+ * Audio Start Time Offset (in seconds) - Skips the intro and jumps straight to the main melody.
+ */
+const START_OFFSET_SECONDS = 30;
 
 const MusicToggle = ({ autoPlay = true }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -98,6 +118,7 @@ const MusicToggle = ({ autoPlay = true }) => {
 
   // Initialize HTML5 Audio Element
   useEffect(() => {
+    const currentSourceIndexRef = { current: 0 };
     const audio = new Audio();
     audio.crossOrigin = "anonymous";
     audio.loop = true;
@@ -105,8 +126,14 @@ const MusicToggle = ({ autoPlay = true }) => {
     audio.src = AUDIO_SOURCES[0];
 
     audio.onerror = () => {
-      console.warn("HTML5 audio failed to load, switching to Indian Wedding Synth Fallback");
-      setUseSynthFallback(true);
+      currentSourceIndexRef.current += 1;
+      if (currentSourceIndexRef.current < AUDIO_SOURCES.length) {
+        console.warn(`Audio source ${AUDIO_SOURCES[currentSourceIndexRef.current - 1]} failed, trying ${AUDIO_SOURCES[currentSourceIndexRef.current]}`);
+        audio.src = AUDIO_SOURCES[currentSourceIndexRef.current];
+      } else {
+        console.warn("All HTML5 audio sources failed to load, switching to Shatamanam Bhavati Synth Fallback");
+        setUseSynthFallback(true);
+      }
     };
 
     audioRef.current = audio;
@@ -143,7 +170,7 @@ const MusicToggle = ({ autoPlay = true }) => {
       masterGain.connect(ctx.destination);
       masterGainRef.current = masterGain;
 
-      const synth = createIndianWeddingSynth(ctx);
+      const synth = createShatamanamBhavatiSynth(ctx);
       const drone = synth.createTanpuraDrone(ctx, masterGain);
       drone.oscillators.forEach((osc) => osc.start(ctx.currentTime));
       synthOscsRef.current = drone.oscillators;
@@ -154,7 +181,7 @@ const MusicToggle = ({ autoPlay = true }) => {
         const noteData = synth.melody[noteIdx % synth.melody.length];
         if (noteData.note >= 0) {
           const freq = synth.baseFreq * synth.scale[noteData.note];
-          synth.playSitarNote(ctx, freq, ctx.currentTime, noteData.dur, masterGain);
+          synth.playFluteNote(ctx, freq, ctx.currentTime, noteData.dur, masterGain);
         }
         noteIdx++;
         synthTimerRef.current = setTimeout(step, noteData.dur * 1000);
@@ -215,6 +242,14 @@ const MusicToggle = ({ autoPlay = true }) => {
     }
 
     if (audioRef.current) {
+      // Local mp4 audio files start at 0s; remote preview files skip intro (30s)
+      const src = audioRef.current.src || "";
+      const isLocal = src.includes("bgp.mp4") || src.includes("bgm.mp4");
+      const targetOffset = isLocal ? 0 : START_OFFSET_SECONDS;
+
+      if (audioRef.current.currentTime < targetOffset) {
+        audioRef.current.currentTime = targetOffset;
+      }
       audioRef.current
         .play()
         .then(() => {
@@ -222,7 +257,7 @@ const MusicToggle = ({ autoPlay = true }) => {
           setIsPlaying(true);
         })
         .catch((err) => {
-          console.warn("Autoplay blocked or failed, attempting synth fallback:", err);
+          console.warn("Autoplay blocked or failed, attempting Shatamanam Bhavati synth fallback:", err);
           setUseSynthFallback(true);
           startSynth();
           setIsPlaying(true);
@@ -311,7 +346,7 @@ const MusicToggle = ({ autoPlay = true }) => {
               className="text-xs font-semibold tracking-wide whitespace-nowrap"
               style={{ fontFamily: "'Outfit', sans-serif", color: "#800000" }}
             >
-              Wedding Melodies
+              Shatamanam Bhavati BGM
             </span>
 
             <Sparkles size={13} color="#D4AF37" className="animate-pulse" />

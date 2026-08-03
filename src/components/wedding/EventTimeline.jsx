@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { WEDDING } from "../../constants/testIds";
-import { MapPin, Clock, CalendarDays } from "lucide-react";
+import { MapPin, Clock, CalendarDays, Shirt } from "lucide-react";
 
 const HALDI_BG = "/haldi.webp";
 const SANGEET_BG = "/reception.webp";
@@ -15,9 +15,8 @@ const events = [
     venue: "Sec B/43, Bandamunda, Railway Quarters",
     image: HALDI_BG,
     items: [
-      { name: "Raata", time: "8:00 AM - 9:00 AM" },
-      { name: "Pellikuthuru", time: "After Haldi Done" },
-      { name: "Haldi", time: "9:00 AM to until we play" },
+      { name: "Raata & Pellikuthuru", time: "8:00 AM - 9:00 AM" },
+      { name: "Haldi", time: "9:00 AM Onwards", dressCode: "Yellow" },
     ],
   },
   {
@@ -26,7 +25,7 @@ const events = [
     venue: "Community Hall, Bandamunda",
     image: MEHENDI_BG,
     items: [
-      { name: "Mehendi / Sangeet", time: "5:30 PM" },
+      { name: "Mehendi / Sangeet", time: "5:30 PM", dressCode: "Green" },
     ],
   },
   {
@@ -35,7 +34,6 @@ const events = [
     venue: "Community Hall, Bandamunda",
     image: SANGEET_BG,
     items: [
-      { name: "Ankurarpana, Snathakam, Kashi Yatra", time: "Will Inform" },
       { name: "Reception", time: "7:30 PM" },
     ],
   },
@@ -56,9 +54,8 @@ const TimelineCard = ({ event, index }) => {
   return (
     <motion.div
       data-testid={`${WEDDING.eventCard}-${index}`}
-      className={`relative flex flex-col md:flex-row items-center gap-6 md:gap-0 mb-16 md:mb-24 ${
-        isLeft ? "md:flex-row" : "md:flex-row-reverse"
-      }`}
+      className={`relative flex flex-col md:flex-row items-center gap-6 md:gap-0 mb-16 md:mb-24 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"
+        }`}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
@@ -129,24 +126,54 @@ const TimelineCard = ({ event, index }) => {
               {event.items.map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-3 p-3 bg-amber-50/30 rounded-r-lg"
-                  style={{ borderLeft: "3.5px solid #D4AF37" }}
+                  className="flex items-start gap-3 p-3.5 bg-amber-50/40 rounded-r-xl"
+                  style={{ borderLeft: "4px solid #D4AF37" }}
                 >
                   <div className="flex-1">
                     <p
-                      className="text-base sm:text-lg font-bold leading-snug"
+                      className="text-lg sm:text-xl font-bold leading-snug"
                       style={{ fontFamily: "'Cormorant Garamond', serif", color: "#800000" }}
                     >
                       {item.name}
                     </p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <Clock size={14} color="#B8860B" className="stroke-[2.5]" />
-                      <p
-                        className="text-xs sm:text-sm font-semibold"
-                        style={{ fontFamily: "'Outfit', sans-serif", color: "#4A3B3B" }}
-                      >
-                        {item.time}
-                      </p>
+                    <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-2">
+                      <div className="flex items-center gap-1.5">
+                        <Clock size={16} color="#B8860B" className="stroke-[2.5]" />
+                        <p
+                          className="text-sm sm:text-base font-medium"
+                          style={{ fontFamily: "'Outfit', sans-serif", color: "#4A3B3B" }}
+                        >
+                          {item.time}
+                        </p>
+                      </div>
+                      {item.dressCode && (
+                        <div
+                          className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-sm font-semibold shadow-xs"
+                          style={{
+                            backgroundColor: item.dressCode.toLowerCase().includes("yellow")
+                              ? "#FFFBEB"
+                              : item.dressCode.toLowerCase().includes("green")
+                                ? "#F0FDF4"
+                                : "#FFFBEB",
+                            color: item.dressCode.toLowerCase().includes("yellow")
+                              ? "#854D0E"
+                              : item.dressCode.toLowerCase().includes("green")
+                                ? "#14532D"
+                                : "#800000",
+                            border: `1.5px solid ${
+                              item.dressCode.toLowerCase().includes("yellow")
+                                ? "#D4AF37"
+                                : item.dressCode.toLowerCase().includes("green")
+                                  ? "#22C55E"
+                                  : "#D4AF37"
+                            }`,
+                            fontFamily: "'Outfit', sans-serif",
+                          }}
+                        >
+                          <Shirt size={16} className="stroke-[2.5]" />
+                          <span>Dress Code: <strong className="font-bold">{item.dressCode}</strong></span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
